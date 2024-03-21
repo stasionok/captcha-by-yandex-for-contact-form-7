@@ -25,8 +25,8 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 			$this->sitekeys = WPCF7::get_option( 'cfyc' );
 		}
 
-		public function get_title() {
-			return __( 'Yandex Captcha', 'contact-form-7-yandex-captcha' );
+		public function get_title(): string {
+			return esc_html( __( 'Yandex Captcha', 'contact-form-7-yandex-captcha' ) );
 		}
 
 		public function is_active(): bool {
@@ -110,7 +110,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 			}
 		}
 
-		protected function menu_page_url( $args = '' ) {
+		protected function menu_page_url( $args = '' ): string {
 			$args = wp_parse_args( $args, array() );
 
 			$url = menu_page_url( 'wpcf7-integration', false );
@@ -123,11 +123,11 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 			return $url;
 		}
 
-		protected function save_data() {
+		protected function save_data(): void {
 			WPCF7::update_option( 'cfyc', $this->sitekeys );
 		}
 
-		protected function reset_data() {
+		protected function reset_data(): void {
 			$this->sitekeys = null;
 			$this->save_data();
 		}
@@ -295,7 +295,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 			if ( is_wp_error( $response ) ) {
 				return false;
 			} else {
-				if ( $response['response']['code'] != 200 ) {
+				if (!isset($response['response']['code']) or $response['response']['code'] != 200 ) {
 					return false;
 				}
 				try {

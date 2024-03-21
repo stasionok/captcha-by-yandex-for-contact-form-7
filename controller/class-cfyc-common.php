@@ -15,13 +15,10 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 		 */
 		const PLUGIN_SYSTEM_NAME = 'contact-form-7-yandex-captcha';
 
-		const TAG_NAME = 'yandex_captcha';
-
 		/**
-		 * @var string Human-readable plugin name for the front end
+		 * @var string Short code name
 		 */
-		const PLUGIN_HUMAN_NAME = 'Yandex Captcha for Contact Form 7';
-
+		const TAG_NAME = 'yandex_captcha';
 
 		/**
 		 * @var string Path to plugin root directory
@@ -50,14 +47,13 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 			$front = CFYC_Frontend::get_instance();
 			add_action( 'wp_head', array( $front, 'cfyc_head_code' ) );
 			add_action( 'wpcf7_init', array( $front, 'cfyc_add_shortcode' ) ); // handle shortcode in frontend
-			add_filter( 'wpcf7_spam', array( $front, 'cfyc_validate_captcha' ), 9, 2 ); // validate catpcha on form submit
+			add_filter( 'wpcf7_spam', array( $front, 'cfyc_validate_captcha' ), 9, 2 ); // validate captcha on form submit
 			add_filter( 'wpcf7_form_hidden_fields', array( $front, 'cfyc_add_hidden_fields' ), 100, 1 ); // add field to post captcha token
 			add_filter( 'wpcf7_validate_' . self::TAG_NAME, array( $front, 'cfyc_validate_fills' ), 99, 2 ); // check is captcha filled to produce error
 		}
 
-
 		/**
-		 * Add actions and work for admin part of plugin
+		 * Add actions and work for admin part of the plugin
 		 */
 		private function define_admin_hooks(): void {
 			if ( is_admin() ) {

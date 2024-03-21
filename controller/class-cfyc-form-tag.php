@@ -16,7 +16,6 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
 			return self::$instance;
 		}
 
-
 		/**
 		 * Show this in popup when user does not configure plugin and tries to use it
 		 *
@@ -29,7 +28,7 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
 				'action'  => 'setup'
 			), $url );
 
-			$confText = sprintf( __( 'Please configure the plugin first. Go to <a href="%s">configuration</a>', 'contact-form-7-yandex-captcha' ),$url);
+			$confText = sprintf( __( 'Please configure the plugin first. Go to <a href="%s">configuration</a>', 'contact-form-7-yandex-captcha' ), $url);
 
 			?>
             <div class="alert-box">
@@ -38,9 +37,9 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
 			<?php
 		}
 
-		/** todo
+		/**
 		 * Backend: Add insert Yandex Captcha button (WP Admin > Contact Forms 7 > select one > see buttons at the top)
-		 */ // public function add( $id, $title, $callback, $options = array() ) {
+		 */
 		public function cfyc_add_form_template_tag(): void {
 			$service = CFYC_Service::get_instance();
 
@@ -55,7 +54,6 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
 		function cfyc_tag_generator_configured( $contact_form, $args = '' ): void {
 			$args = wp_parse_args( $args, array() );
 			?>
-
             <div class="control-box">
                 <fieldset>
                     <table class="form-table">
