@@ -2,7 +2,6 @@
 /**
  * Plugin Name: Contact Form 7 Yandex Captcha
  * Description: Allow use Yandex captcha for your forms with Contact Form 7
- * Plugin URI:  https://qbein.net/chat-with-gpt
  * Requires at least: 5.0
  * Requires PHP: 8.0
  * Author:      stasionok
@@ -16,6 +15,8 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 const CFYC_REQUIRED_PHP_VERSION = '8.0';
 const CFYC_REQUIRED_WP_VERSION  = '5.0';
@@ -32,7 +33,7 @@ function cfyc_requirements_met(): array {
 
 	if ( version_compare( PHP_VERSION, CFYC_REQUIRED_PHP_VERSION, '<' ) ) {
 		$errors[] = printf(
-			esc_html__( 'Your server is running PHP version %1$s but this plugin requires at least PHP %2$s. Please run an upgrade.', 'chat-with-gpt' ),
+			esc_html__( 'Your server is running PHP version %1$s but this plugin requires at least PHP %2$s. Please run an upgrade.', 'contact-form-7-yandex-captcha' ),
 			PHP_VERSION,
 			CFYC_REQUIRED_PHP_VERSION
 		);
@@ -40,21 +41,15 @@ function cfyc_requirements_met(): array {
 
 	if ( version_compare( $wp_version, CFYC_REQUIRED_WP_VERSION, '<' ) ) {
 		$errors[] = printf(
-			esc_html__( 'Your Wordpress running version is %1$s but this plugin requires at least version %2$s. Please run an upgrade.', 'chat-with-gpt' ),
+			esc_html__( 'Your Wordpress running version is %1$s but this plugin requires at least version %2$s. Please run an upgrade.', 'contact-form-7-yandex-captcha' ),
 			esc_html( $wp_version ),
 			CFYC_REQUIRED_WP_VERSION
 		);
 	}
 
-//	$extensions = get_loaded_extensions();
-//
-//	if ( ! in_array( 'curl', $extensions ) ) {
-//		$errors[] = esc_html__( 'Your need to install curl php extension to continue plugin use. Please install it first.', 'chat-with-gpt' );
-//	}
-//
-//	if ( ! in_array( 'json', $extensions ) ) {
-//		$errors[] = esc_html__( 'Your need to install json php extension to continue plugin use. Please install it first.', 'chat-with-gpt' );
-//	}
+	if ( ! is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
+		$errors[] = esc_html__( 'Please install and activate Contact Form 7 plugin first', 'contact-form-7-yandex-captcha' );
+	}
 
 	return $errors;
 }
@@ -88,6 +83,7 @@ if ( ! $errors ) {
 	add_action( 'admin_notices', function () use ( $errors ) {
 		require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 	} );
+	deactivate_plugins( 'contact-form-7-yandex-captcha/bootstrap.php' );
 }
 
 if ( method_exists( CFYC_Common::class, 'deactivate' ) ) {

@@ -133,9 +133,14 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 		 * @return mixed
 		 */
 		public static function plugin_action_links( $actions ): mixed {
+			$url = menu_page_url( 'wpcf7-integration', false );
+			$url = add_query_arg( array(
+				'service' => 'cfyc',
+				'action'  => 'setup'
+			), $url );
 			array_unshift( $actions,
 				sprintf( '<a href="%s" aria-label="%s">%s</a>',
-					menu_page_url( self::PLUGIN_SYSTEM_NAME, false ),
+					$url,
 					esc_html__( 'Configure', 'contact-form-7-yandex-captcha' ),
 					esc_html__( 'Configure', 'contact-form-7-yandex-captcha' )
 				)
