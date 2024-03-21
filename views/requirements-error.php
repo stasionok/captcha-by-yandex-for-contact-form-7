@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 /* @var array $errors */
 ?>
 <div class="error">
-    <p><?php echo esc_html__( 'Yandex Captcha for Contact Form 7', 'contact-form-7-yandex-captcha' ) . ' ' . esc_html__( 'error: Your environment does not meet all of the system requirements listed below.', 'contact-form-7-yandex-captcha' ) ?> </p>
+    <p><?php echo esc_html__( 'Contact Form 7 Yandex Captcha', 'contact-form-7-yandex-captcha' ) . ' ' . esc_html__( 'error: Your environment does not meet all of the system requirements listed below.', 'contact-form-7-yandex-captcha' ) ?> </p>
 
     <ul class="ul-disc">
 		<?php foreach ( $errors as $error ): ?>
