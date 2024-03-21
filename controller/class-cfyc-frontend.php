@@ -88,20 +88,14 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
     function cfycOnloadFunction() {
         if (window.smartCaptcha) {
             const container = document.getElementById('{$tag->name}');
-            const tokenField = document.querySelector('input[name=_wpcf7_yandex_captcha_token]');
             const widgetId = window.smartCaptcha.render(container, {
                 sitekey: '{$key}',
                 invisible: {$invisible},
                 test: {$test},
                 hideShield: {$hideShield},
                 shieldPosition: '{$shieldPosition}',
-                callback: (token) => tokenCallback(token),
+                callback: (token) => container.classList.remove("wpcf7-not-valid"),
             });
-            
-            function tokenCallback(token) {
-                tokenField.value = token
-                container.classList.remove("wpcf7-not-valid");
-            }
             const wpcf7Elm = container.closest( '.wpcf7' );
             wpcf7Elm.addEventListener( 'wpcf7submit', function() {
 			   {$execute}
@@ -115,21 +109,6 @@ CONTENT;
 		}
 
 		/**
-		 * Adds hidden form field for reCAPTCHA.
-		 */
-		function cfyc_add_hidden_fields( $fields ) {
-			$service = CFYC_Service::get_instance();
-
-			if ( ! $service->is_active() ) {
-				return $fields;
-			}
-
-			return array_merge( $fields, array(
-				'_wpcf7_yandex_captcha_token' => '',
-			) );
-		}
-
-		/**
 		 * Check if captcha solved before submitting
 		 *
 		 * @param $result
@@ -139,7 +118,7 @@ CONTENT;
 		 */
 		public function cfyc_validate_fills( $result, $tag ) {
 			// inform: that part verify only captcha, nonce checks by contact form 7
-			$token = stripslashes( sanitize_text_field( $_POST['_wpcf7_yandex_captcha_token'] ?? '' ) );
+			$token = stripslashes( sanitize_text_field( $_POST['smart-token'] ?? '' ) );
 			if ( empty( $token ) ) {
 				$error = __( 'Please check captcha', 'captcha-by-yandex-for-contact-form-7' );
 				$result->invalidate( $tag, $error );
@@ -163,7 +142,7 @@ CONTENT;
 				return false;
 			}
 			// inform: that part verify only captcha, nonce checks by contact form 7
-			$token = stripslashes( sanitize_text_field( $_POST['_wpcf7_yandex_captcha_token'] ?? '' ) );
+			$token = stripslashes( sanitize_text_field( $_POST['smart-token'] ?? '' ) );
 
 			if ( $service->verify( $token ) ) { // Human
 				$spam = false;

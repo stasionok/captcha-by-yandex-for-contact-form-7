@@ -3,7 +3,7 @@
  * Plugin Name: Captcha by Yandex for Contact Form 7
  * Description: Allow use Yandex captcha for your forms with Contact Form 7
  * Requires at least: 5.0
- * Requires PHP: 8.0
+ * Requires PHP: 7.4
  * Author:      stasionok
  * Author URI:  https://t.me/stasionok
  * Version:     1.0.0
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-const CFYC_REQUIRED_PHP_VERSION = '8.0';
+const CFYC_REQUIRED_PHP_VERSION = '7.4';
 const CFYC_REQUIRED_WP_VERSION  = '5.0';
 
 /**

@@ -48,7 +48,6 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 			add_action( 'wp_head', array( $front, 'cfyc_head_code' ) );
 			add_action( 'wpcf7_init', array( $front, 'cfyc_add_shortcode' ) ); // handle shortcode in frontend
 			add_filter( 'wpcf7_spam', array( $front, 'cfyc_validate_captcha' ), 9, 2 ); // validate captcha on form submit
-			add_filter( 'wpcf7_form_hidden_fields', array( $front, 'cfyc_add_hidden_fields' ), 100, 1 ); // add field to post captcha token
 			add_filter( 'wpcf7_validate_' . self::TAG_NAME, array( $front, 'cfyc_validate_fills' ), 99, 2 ); // check is captcha filled to produce error
 		}
 
@@ -128,7 +127,7 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 		 *
 		 * @return mixed
 		 */
-		public static function plugin_action_links( $actions ): mixed {
+		public static function plugin_action_links( $actions ) {
 			$url = menu_page_url( 'wpcf7-integration', false );
 			$url = add_query_arg( array(
 				'service' => 'cfyc',
