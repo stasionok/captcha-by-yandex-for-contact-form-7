@@ -13,7 +13,7 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 		/**
 		 * @var string Plugin common system name
 		 */
-		const PLUGIN_SYSTEM_NAME = 'contact-form-7-yandex-captcha';
+		const PLUGIN_SYSTEM_NAME = 'captcha-by-yandex-for-contact-form-7';
 
 		/**
 		 * @var string Short code name
@@ -137,8 +137,8 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 			array_unshift( $actions,
 				sprintf( '<a href="%s" aria-label="%s">%s</a>',
 					$url,
-					esc_html__( 'Configure', 'contact-form-7-yandex-captcha' ),
-					esc_html__( 'Configure', 'contact-form-7-yandex-captcha' )
+					esc_html__( 'Configure', 'captcha-by-yandex-for-contact-form-7' ),
+					esc_html__( 'Configure', 'captcha-by-yandex-for-contact-form-7' )
 				)
 			);
 

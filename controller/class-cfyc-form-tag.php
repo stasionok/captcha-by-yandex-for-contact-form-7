@@ -27,12 +27,12 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
 				'service' => 'cfyc',
 				'action'  => 'setup'
 			), $url );
-
-			$confText = sprintf( __( 'Please configure the plugin first. Go to <a href="%s">configuration</a>', 'contact-form-7-yandex-captcha' ), $url);
+			/* translators: %s: url */
+			$confText = sprintf( __( 'Please configure the plugin first. Go to <a href="%s">configuration</a>', 'captcha-by-yandex-for-contact-form-7' ), $url );
 
 			?>
             <div class="alert-box">
-				<?php echo $confText ?>
+				<?php echo wp_kses( $confText, array( 'a' => array( 'href' => true ) ) ) ?>
             </div>
 			<?php
 		}
@@ -60,37 +60,37 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
                         <tbody>
                         <tr>
                             <th scope="row"><label for="<?php echo esc_attr( $args['content'] . '-name' ); ?>"><?php echo esc_html( __( 'Name', 'contact-form-7' ) ); ?></label></th>
-                            <td><input type="text" name="name" class="tg-name oneline" id="<?php echo esc_attr( $args['content'] . '-name' ); ?>" /></td>
+                            <td><input type="text" name="name" class="tg-name oneline" id="<?php echo esc_attr( $args['content'] . '-name' ); ?>"/></td>
                         </tr>
 
                         <tr>
                             <th scope="row">
-								<?php echo esc_html( __( 'Test mode', 'contact-form-7-yandex-captcha' ) ); ?>
+								<?php echo esc_html( __( 'Test mode', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                             </th>
                             <td>
                                 <fieldset>
                                     <legend class="screen-reader-text">
-										<?php echo esc_html( __( 'Test mode', 'contact-form-7-yandex-captcha' ) ); ?>
+										<?php echo esc_html( __( 'Test mode', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                                     </legend>
                                     <label for="<?php echo esc_attr( $args['content'] . '-test' ); ?>">
                                         <input type="checkbox" name="test" class="option" id="<?php echo esc_attr( $args['content'] . '-test' ); ?>"/>
-										<?php echo esc_html( __( 'Enable test mode', 'contact-form-7-yandex-captcha' ) ); ?>
+										<?php echo esc_html( __( 'Enable test mode', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                                     </label>
                                 </fieldset>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">
-								<?php echo esc_html( __( 'Invisible captcha', 'contact-form-7-yandex-captcha' ) ); ?>
+								<?php echo esc_html( __( 'Invisible captcha', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                             </th>
                             <td>
                                 <fieldset>
                                     <legend class="screen-reader-text">
-										<?php echo esc_html( __( 'Invisible captcha', 'contact-form-7-yandex-captcha' ) ); ?>
+										<?php echo esc_html( __( 'Invisible captcha', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                                     </legend>
                                     <label for="<?php echo esc_attr( $args['content'] . '-invisible' ); ?>">
                                         <input type="checkbox" name="invisible" class="option" id="<?php echo esc_attr( $args['content'] . '-invisible' ); ?>"/>
-										<?php echo esc_html( __( 'Use invisible captcha', 'contact-form-7-yandex-captcha' ) ); ?>
+										<?php echo esc_html( __( 'Use invisible captcha', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                                     </label>
                                 </fieldset>
                             </td>
@@ -99,22 +99,22 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
                         <tr>
                             <th scope="row">
                                 <label for="<?php echo esc_attr( $args['content'] . '-shieldPosition' ); ?>">
-									<?php echo esc_html( __( 'Data processing block', 'contact-form-7-yandex-captcha' ) ); ?>
+									<?php echo esc_html( __( 'Data processing block', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                                 </label>
                             </th>
                             <td>
                                 <label for="<?php echo esc_attr( $args['content'] . '-hideShield' ); ?>">
                                     <input type="checkbox" name="hideShield" class="option" id="<?php echo esc_attr( $args['content'] . '-hideShield' ); ?>"/>
-									<?php echo esc_html( __( 'Hide data processing block', 'contact-form-7-yandex-captcha' ) ); ?>
+									<?php echo esc_html( __( 'Hide data processing block', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                                 </label>
                                 <br/>
-                                <i><?php echo esc_html( __( 'It is your responsibility to notify users that their data is being processed by SmartCaptcha. If you hide the notification block, let users know in some other way that SmartCaptcha is processing their data.', 'contact-form-7-yandex-captcha' ) ); ?></i>
+                                <i><?php echo esc_html( __( 'It is your responsibility to notify users that their data is being processed by SmartCaptcha. If you hide the notification block, let users know in some other way that SmartCaptcha is processing their data.', 'captcha-by-yandex-for-contact-form-7' ) ); ?></i>
                                 <br/>
                                 <br/>
 
                                 <fieldset style="border: 1px solid;padding: 1em;">
                                     <legend>
-										<?php echo esc_html( __( 'Position of Data processing block:', 'contact-form-7-yandex-captcha' ) ); ?>
+										<?php echo esc_html( __( 'Position of Data processing block:', 'captcha-by-yandex-for-contact-form-7' ) ); ?>
                                     </legend>
                                     <div><label><input type="radio" class="option" name="shieldPosition" value="top-left"/>top-left</label></div>
                                     <div><label><input type="radio" class="option" name="shieldPosition" value="center-left"/>center-left</label></div>
@@ -131,10 +131,10 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
             </div>
 
             <div class="insert-box">
-                <input type="text" name="<?php echo CFYC_Common::TAG_NAME ?>" class="tag code" readonly="readonly" onfocus="this.select()"/>
+                <input type="text" name="<?php echo esc_attr(CFYC_Common::TAG_NAME) ?>" class="tag code" readonly="readonly" onfocus="this.select()"/>
 
                 <div class="submitbox">
-                    <input type="button" class="button button-primary insert-tag" value="<?php echo esc_attr( __( 'Insert Tag', 'contact-form-7-yandex-captcha' ) ); ?>"/>
+                    <input type="button" class="button button-primary insert-tag" value="<?php echo esc_attr( __( 'Insert Tag', 'captcha-by-yandex-for-contact-form-7' ) ); ?>"/>
                 </div>
 
                 <br class="clear"/>
@@ -150,8 +150,8 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
 		public function cfyc_tag_generator_configured_autoclick(): void {
 			?>
             <script>jQuery(function ($) {
-                    $("a:contains('<?php echo self::PANEL_BUTTON_NAME ?>')").click(function () {
-                        wpcf7.taggen.insert("[<?php echo CFYC_Common::TAG_NAME ?>]");
+                    $("a:contains('<?php echo esc_attr(self::PANEL_BUTTON_NAME) ?>')").click(function () {
+                        wpcf7.taggen.insert("[<?php echo esc_attr(CFYC_Common::TAG_NAME) ?>]");
                     });
                     $(document).on("DOMNodeInserted", function () {
                         if ($("#TB_window .insert-box-cfyc").length) {
@@ -160,7 +160,7 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
                     })
                 })</script>
             <div class="insert-box insert-box-cfyc">
-                <input type="text" name="<?php echo CFYC_Common::TAG_NAME ?>" class="tag code" readonly="readonly" value="<?php echo esc_attr( '['. CFYC_Common::TAG_NAME .']' ) ?>"/>
+                <input type="text" name="<?php echo esc_attr(CFYC_Common::TAG_NAME) ?>" class="tag code" readonly="readonly" value="<?php echo esc_attr( '[' . CFYC_Common::TAG_NAME . ']' ) ?>"/>
                 <div class="submitbox">
                     <input type="button" class="button button-primary insert-tag" value="<?php echo esc_attr( __( 'Insert Tag', 'contact-form-7' ) ) ?>"/>
                 </div>

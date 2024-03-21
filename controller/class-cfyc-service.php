@@ -26,7 +26,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 		}
 
 		public function get_title(): string {
-			return esc_html( __( 'Yandex Captcha', 'contact-form-7-yandex-captcha' ) );
+			return esc_html( __( 'Yandex Captcha', 'captcha-by-yandex-for-contact-form-7' ) );
 		}
 
 		public function is_active(): bool {
@@ -44,10 +44,10 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 		}
 
 		public function link() {
-			echo wpcf7_link(
+			echo wp_kses( wpcf7_link(
 				'https://console.cloud.yandex.ru/',
 				'console.cloud.yandex.ru'
-			);
+			), array( 'a' => array( 'href' => true ) ) );
 		}
 
 		public function get_global_sitekey() {
@@ -171,7 +171,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 				echo sprintf(
 					'<div class="notice notice-error"><p><strong>%1$s</strong>: %2$s</p></div>',
 					esc_html( __( "Error", 'contact-form-7' ) ),
-					esc_html( __( "Invalid keys", 'contact-form-7-yandex-captcha' ) ) );
+					esc_html( __( "Invalid keys", 'captcha-by-yandex-for-contact-form-7' ) ) );
 			}
 
 			if ( 'success' == $message ) {
@@ -183,13 +183,13 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 		public function display( $action = '' ): void {
 			echo sprintf(
 				'<p>%s</p>',
-				esc_html( __( "Yandex Captcha protects you against spam and other types of automated abuse. With Contact Form 7&#8217;s Yandex Captcha integration module, you can block abusive form submissions by spam bots.", 'contact-form-7-yandex-captcha' ) )
+				esc_html( __( "Yandex Captcha protects you against spam and other types of automated abuse. With Contact Form 7&#8217;s Yandex Captcha integration module, you can block abusive form submissions by spam bots.", 'captcha-by-yandex-for-contact-form-7' ) )
 			);
 
 			if ( $this->is_active() ) {
 				echo sprintf(
 					'<p class="dashicons-before dashicons-yes">%s</p>',
-					esc_html( __( "Yandex Captcha is active on this site.", 'contact-form-7-yandex-captcha' ) )
+					esc_html( __( "Yandex Captcha is active on this site.", 'captcha-by-yandex-for-contact-form-7' ) )
 				);
 			}
 
@@ -214,7 +214,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
                 <table class="form-table">
                     <tbody>
                     <tr>
-                        <th scope="row"><label for="sitekey"><?php echo esc_html( __( 'Client key', 'contact-form-7-yandex-captcha' ) ); ?></label></th>
+                        <th scope="row"><label for="sitekey"><?php echo esc_html( __( 'Client key', 'captcha-by-yandex-for-contact-form-7' ) ); ?></label></th>
                         <td><?php
 							if ( $this->is_active() ) {
 								echo esc_html( $sitekey );
@@ -231,7 +231,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 							?></td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="secret"><?php echo esc_html( __( 'Server Key', 'contact-form-7-yandex-captcha' ) ); ?></label></th>
+                        <th scope="row"><label for="secret"><?php echo esc_html( __( 'Server Key', 'captcha-by-yandex-for-contact-form-7' ) ); ?></label></th>
                         <td><?php
 							if ( $this->is_active() ) {
 								echo esc_html( wpcf7_mask_password( $secret, 4, 4 ) );
@@ -295,7 +295,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 			if ( is_wp_error( $response ) ) {
 				return false;
 			} else {
-				if (!isset($response['response']['code']) or $response['response']['code'] != 200 ) {
+				if ( ! isset( $response['response']['code'] ) or $response['response']['code'] != 200 ) {
 					return false;
 				}
 				try {
@@ -309,7 +309,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 		}
 
 		private function verifySiteKey( string $sitekey ): bool {
-			$urlparts = parse_url( site_url() );
+			$urlparts = wp_parse_url( site_url() );
 			$domain   = $urlparts['host'];
 			$response = wp_remote_post( 'https://smartcaptcha.yandexcloud.net/check?host=' . $domain . '&sitekey=' . $sitekey );
 

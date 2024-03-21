@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Contact Form 7 Yandex Captcha\n"
-"POT-Creation-Date: 2024-03-21 17:39+0300\n"
-"PO-Revision-Date: 2024-03-21 17:41+0300\n"
+"POT-Creation-Date: 2024-03-21 18:24+0300\n"
+"PO-Revision-Date: 2024-03-21 18:24+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -158,10 +158,9 @@ msgstr "Удалить ключи"
 msgid "Save Changes"
 msgstr "Сохранить настройки"
 
-#. Plugin Name of the plugin/theme
 #: views/requirements-error.php:7
-msgid "Contact Form 7 Yandex Captcha"
-msgstr "Contact Form 7 Яндекс капча"
+msgid "Yandex Captcha for Contact Form 7"
+msgstr "Яндекс капча for Contact Form 7"
 
 #: views/requirements-error.php:7
 msgid ""
@@ -179,6 +178,10 @@ msgstr ""
 "Если вам нужно обновить вашу версию PHP, вы можете запросить это у вашего "
 "хостинг-провайдер, и если вам нужно обновить WordPress посмотрите в"
 
+#. Plugin Name of the plugin/theme
+msgid "Captcha by Yandex for Contact Form 7"
+msgstr "Капча от Яндекс для Contact Form 7"
+
 #. Description of the plugin/theme
 msgid "Allow use Yandex captcha for your forms with Contact Form 7"
 msgstr ""
@@ -192,5 +195,5 @@ msgstr "stasionok"
 msgid "https://t.me/stasionok"
 msgstr "https://t.me/stasionok"
 
-#~ msgid "Yandex Captcha for Contact Form 7"
-#~ msgstr "Яндекс капча для Contact Form 7"
+#~ msgid "Contact Form 7 Yandex Captcha"
+#~ msgstr "Яндекс капча for Contact Form 7"

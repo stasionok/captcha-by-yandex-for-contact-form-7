@@ -1,6 +1,6 @@
-=== Contact Form 7 Yandex Captcha ===
+=== Captcha by Yandex for Contact Form 7 ===
 Contributors: stasionok
-Tags: contact form 7, captcha, yandex, яндекс, капча, яндекс капча, yandex captcha, contact form 7 yandex captcha
+Tags: contact form 7, yandex, captcha, яндекс капча, yandex captcha
 Tested up to: 6.4.3
 Stable tag: 1.0.0
 License: GPLv3
@@ -16,7 +16,7 @@ Yandex Captcha protects you against spam and other types of automated abuse. Wit
 
 This section describes how to install the plugin and get it working.
 
-1. Upload the plugin files to the `/wp-content/plugins/contact-form-7-yandex-captcha` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/captcha-by-yandex-for-contact-form-7` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Go to Contact form 7 plugin integration page
 4. Setup site key and server key from yandex cloud

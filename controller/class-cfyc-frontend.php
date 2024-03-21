@@ -138,9 +138,10 @@ CONTENT;
 		 * @return mixed
 		 */
 		public function cfyc_validate_fills( $result, $tag ) {
+			// inform: that part verify only captcha, nonce checks by contact form 7
 			$token = stripslashes( sanitize_text_field( $_POST['_wpcf7_yandex_captcha_token'] ?? '' ) );
 			if ( empty( $token ) ) {
-				$error = __( 'Please check captcha', 'contact-form-7-yandex-captcha' );
+				$error = __( 'Please check captcha', 'captcha-by-yandex-for-contact-form-7' );
 				$result->invalidate( $tag, $error );
 			}
 
@@ -161,7 +162,7 @@ CONTENT;
 			if ( ! $service->is_active() ) {
 				return false;
 			}
-
+			// inform: that part verify only captcha, nonce checks by contact form 7
 			$token = stripslashes( sanitize_text_field( $_POST['_wpcf7_yandex_captcha_token'] ?? '' ) );
 
 			if ( $service->verify( $token ) ) { // Human

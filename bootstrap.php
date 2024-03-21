@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Contact Form 7 Yandex Captcha
+ * Plugin Name: Captcha by Yandex for Contact Form 7
  * Description: Allow use Yandex captcha for your forms with Contact Form 7
  * Requires at least: 5.0
  * Requires PHP: 8.0
@@ -8,7 +8,7 @@
  * Author URI:  https://t.me/stasionok
  * Version:     1.0.0
  * License: GPLv2 or later
- * Text Domain: contact-form-7-yandex-captcha
+ * Text Domain: captcha-by-yandex-for-contact-form-7
  * Domain Path: /languages
  *
  * Network: false
@@ -32,23 +32,23 @@ function cfyc_requirements_met(): array {
 	$errors = [];
 
 	if ( version_compare( PHP_VERSION, CFYC_REQUIRED_PHP_VERSION, '<' ) ) {
-		$errors[] = printf(
-			esc_html__( 'Your server is running PHP version %1$s but this plugin requires at least PHP %2$s. Please run an upgrade.', 'contact-form-7-yandex-captcha' ),
-			PHP_VERSION,
-			CFYC_REQUIRED_PHP_VERSION
+		$errors[] = printf( /* translators: %s: php version */
+			esc_html__( 'Your server is running PHP version %1$s but this plugin requires at least PHP %2$s. Please run an upgrade.', 'captcha-by-yandex-for-contact-form-7' ),
+			esc_attr(PHP_VERSION),
+			esc_attr(CFYC_REQUIRED_PHP_VERSION)
 		);
 	}
 
 	if ( version_compare( $wp_version, CFYC_REQUIRED_WP_VERSION, '<' ) ) {
-		$errors[] = printf(
-			esc_html__( 'Your Wordpress running version is %1$s but this plugin requires at least version %2$s. Please run an upgrade.', 'contact-form-7-yandex-captcha' ),
+		$errors[] = printf( /* translators: %s: WP version */
+			esc_html__( 'Your Wordpress running version is %1$s but this plugin requires at least version %2$s. Please run an upgrade.', 'captcha-by-yandex-for-contact-form-7' ),
 			esc_html( $wp_version ),
-			CFYC_REQUIRED_WP_VERSION
+			esc_attr(CFYC_REQUIRED_WP_VERSION)
 		);
 	}
 
 	if ( ! is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
-		$errors[] = esc_html__( 'Please install and activate Contact Form 7 plugin first', 'contact-form-7-yandex-captcha' );
+		$errors[] = esc_html__( 'Please install and activate Contact Form 7 plugin first', 'captcha-by-yandex-for-contact-form-7' );
 	}
 
 	return $errors;
@@ -83,7 +83,7 @@ if ( ! $errors ) {
 	add_action( 'admin_notices', function () use ( $errors ) {
 		require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 	} );
-	deactivate_plugins( 'contact-form-7-yandex-captcha/bootstrap.php' );
+	deactivate_plugins( 'captcha-by-yandex-for-contact-form-7/bootstrap.php' );
 }
 
 if ( method_exists( CFYC_Common::class, 'deactivate' ) ) {
