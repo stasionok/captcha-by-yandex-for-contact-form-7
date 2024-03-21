@@ -43,7 +43,7 @@ if ( ! class_exists( 'CFYC_Common' ) ) {
 		/**
 		 * Add actions and work for common part of the plugin
 		 */
-		private function define_common_hooks(): void { // todo
+		private function define_common_hooks(): void {
 			$front = CFYC_Frontend::get_instance();
 			add_action( 'wp_head', array( $front, 'cfyc_head_code' ) );
 			add_action( 'wpcf7_init', array( $front, 'cfyc_add_shortcode' ) ); // handle shortcode in frontend
