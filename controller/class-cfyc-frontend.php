@@ -81,10 +81,7 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
                 shieldPosition: '{$shieldPosition}',
                 callback: (token) => container.classList.remove("wpcf7-not-valid"),
             });
-            const wpcf7Elm = container.closest( '.wpcf7' );
-            wpcf7Elm.addEventListener( 'wpcf7submit', function() {
-			   {$execute}
-			}, false );
+            {$execute}
         }
     }
 </script>
