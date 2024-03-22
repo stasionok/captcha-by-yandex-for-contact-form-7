@@ -56,9 +56,10 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 			$key     = $service->get_sitekey();
 
 			$execute = $invisible === 'true' ? 'window.smartCaptcha.execute();' : 'if (tokenField.value.length === 0) { container.classList.add("wpcf7-not-valid"); }';
+			$style = $invisible === 'true' ? '' : ' style="min-height: 102px;"';
 			$rand = wp_rand(1000,9999);
 			$content = <<<CONTENT
-<div class="smart-captcha" id="{$tag->name}-{$rand}"></div>
+<div class="smart-captcha" id="{$tag->name}-{$rand}"{$style}></div>
 <style>
 .smart-captcha.wpcf7-not-valid {
     height: 102px;
