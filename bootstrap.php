@@ -6,7 +6,7 @@
  * Requires PHP: 7.4
  * Author:      stasionok
  * Author URI:  https://t.me/stasionok
- * Version:     1.0.0
+ * Version:     1.0.2
  * License: GPLv2 or later
  * Text Domain: captcha-by-yandex-for-contact-form-7
  * Domain Path: /languages

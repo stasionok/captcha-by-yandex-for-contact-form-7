@@ -14,24 +14,6 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 			return self::$instance;
 		}
 
-
-		/**
-		 * Load captcha JS in a head
-		 *
-		 * @return void
-		 */
-		public function cfyc_head_code(): void {
-			wp_enqueue_script(
-				'yandex-captcha',
-				'https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=cfycOnloadFunction',
-				array(),
-				'3.8.3',
-				array(
-					'strategy' => 'defer'
-				)
-			);
-		}
-
 		/**
 		 * Add shortcode handler
 		 *
@@ -74,8 +56,9 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 			$key     = $service->get_sitekey();
 
 			$execute = $invisible === 'true' ? 'window.smartCaptcha.execute();' : 'if (tokenField.value.length === 0) { container.classList.add("wpcf7-not-valid"); }';
+			$rand = wp_rand(1000,9999);
 			$content = <<<CONTENT
-<div class="smart-captcha" id="{$tag->name}"></div>
+<div class="smart-captcha" id="{$tag->name}-{$rand}"></div>
 <style>
 .smart-captcha.wpcf7-not-valid {
     height: 102px;
@@ -84,11 +67,12 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
     border-radius: 11px;
 }
 </style>
+<script src="https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=cfycOnloadFunction{$rand}" defer></script>
 <script>
-    function cfycOnloadFunction() {
+    function cfycOnloadFunction{$rand}() {
         if (window.smartCaptcha) {
-            const container = document.getElementById('{$tag->name}');
-            const widgetId = window.smartCaptcha.render(container, {
+            const container = document.getElementById('{$tag->name}-{$rand}');
+             window.smartCaptcha.render(container, {
                 sitekey: '{$key}',
                 invisible: {$invisible},
                 test: {$test},
@@ -117,8 +101,9 @@ CONTENT;
 		 * @return mixed
 		 */
 		public function cfyc_validate_fills( $result, $tag ) {
-			// inform: that part verify only captcha, nonce checks by contact form 7
-			$token = stripslashes( sanitize_text_field( $_POST['smart-token'] ?? '' ) );
+			$submission = WPCF7_Submission::get_instance();
+			$data = $submission->get_posted_data();
+			$token = stripslashes( sanitize_text_field( $data['smart-token'] ?? '' ) );
 			if ( empty( $token ) ) {
 				$error = __( 'Please check captcha', 'captcha-by-yandex-for-contact-form-7' );
 				$result->invalidate( $tag, $error );
@@ -137,12 +122,12 @@ CONTENT;
 		 */
 		public function cfyc_validate_captcha( $result, $tag ): bool {
 			$service = CFYC_Service::get_instance();
-
 			if ( ! $service->is_active() ) {
 				return false;
 			}
-			// inform: that part verify only captcha, nonce checks by contact form 7
-			$token = stripslashes( sanitize_text_field( $_POST['smart-token'] ?? '' ) );
+			$submission = WPCF7_Submission::get_instance();
+			$data = $submission->get_posted_data();
+			$token = stripslashes( sanitize_text_field( $data['smart-token'] ?? '' ) );
 
 			if ( $service->verify( $token ) ) { // Human
 				$spam = false;
