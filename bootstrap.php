@@ -31,6 +31,8 @@ function cfyc_requirements_met(): array {
 
 	$errors = [];
 
+	load_plugin_textdomain( 'captcha-by-yandex-for-contact-form-7', false, 'captcha-by-yandex-for-contact-form-7/languages/' );
+
 	if ( version_compare( PHP_VERSION, CFYC_REQUIRED_PHP_VERSION, '<' ) ) {
 		$errors[] = printf( /* translators: %s: php version */
 			esc_html__( 'Your server is running PHP version %1$s but this plugin requires at least PHP %2$s. Please run an upgrade.', 'captcha-by-yandex-for-contact-form-7' ),
