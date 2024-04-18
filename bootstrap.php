@@ -4,10 +4,11 @@
  * Description: Allow use Yandex captcha for your forms with Contact Form 7
  * Requires at least: 5.0
  * Requires PHP: 7.4
+ * Requires Plugins: contact-form-7
  * Author:      stasionok
  * Author URI:  https://t.me/stasionok
  * Version:     1.0.2
- * License: GPLv2 or later
+ * License: GPLv3
  * Text Domain: captcha-by-yandex-for-contact-form-7
  * Domain Path: /languages
  *
@@ -49,7 +50,7 @@ function cfyc_requirements_met(): array {
 		);
 	}
 
-	if ( ! is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
+	if (version_compare( $wp_version, '6.5', '<' ) &&  ! is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
 		$errors[] = esc_html__( 'Please install and activate Contact Form 7 plugin first', 'captcha-by-yandex-for-contact-form-7' );
 	}
 
@@ -85,7 +86,6 @@ if ( ! $errors ) {
 	add_action( 'admin_notices', function () use ( $errors ) {
 		require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 	} );
-	deactivate_plugins( 'captcha-by-yandex-for-contact-form-7/bootstrap.php' );
 }
 
 if ( method_exists( CFYC_Common::class, 'deactivate' ) ) {

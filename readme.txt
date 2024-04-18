@@ -11,6 +11,14 @@ Add antispam Yandex captcha for your forms with Contact Form 7
 
 Yandex Captcha protects you against spam and other types of automated abuse. With Contact Form 7’s Yandex Captcha integration module, you can block abusive form submissions by spam bots.
 
+= Using of a 3rd Party or external service =
+
+This plugin uses [Yandex SmartCaptcha](https://yandex.cloud/ru/services/smartcaptcha) service for its main functionality. Please read [terms of use](https://yandex.ru/legal/cloud_terms_smartcaptcha/)
+
+To implement the main plugin functionality, this plugin makes remote requests to yandex smart captcha service (https://smartcaptcha.yandexcloud.net) within three cases:
+ - to check yandex captcha sitekey validity
+ - to load captcha challenge
+ - to check a solving result
 
 == Installation ==
 
@@ -56,3 +64,6 @@ Fix verify captcha on some cases
 = 1.0.2 =
 Fix wp codex issue
 Allows using few forms in one page
+
+= 1.0.3 =
+* Update code due deploy review

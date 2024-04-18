@@ -55,11 +55,19 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 			$service = CFYC_Service::get_instance();
 			$key     = $service->get_sitekey();
 
-			$execute = $invisible === 'true' ? 'window.smartCaptcha.execute();' : 'if (tokenField.value.length === 0) { container.classList.add("wpcf7-not-valid"); }';
-			$style = $invisible === 'true' ? '' : ' style="min-height: 102px;"';
-			$rand = wp_rand(1000,9999);
-			$content = <<<CONTENT
-<div class="smart-captcha" id="{$tag->name}-{$rand}"{$style}></div>
+			$rand    = wp_rand( 1000, 9999 );
+
+			$execute = $invisible === 'true' ?
+				'window.smartCaptcha.execute();' :
+				"container.closest('form').addEventListener('submit', function (event) {
+					const tokenField = document.querySelector('#{$tag->name}-{$rand} input[name=smart-token]');
+				    if (tokenField?.value?.length === 0) { container.classList.add(\"wpcf7-not-valid\"); }
+				})";
+
+			$style   = $invisible === 'true' ? '' : ' style="min-height: 102px;"';
+
+			$content = "
+<div class=\"smart-captcha\" id=\"{$tag->name}-{$rand}\"{$style}></div>
 <style>
 .smart-captcha.wpcf7-not-valid {
     height: 102px;
@@ -68,24 +76,24 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
     border-radius: 11px;
 }
 </style>
-<script src="https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=cfycOnloadFunction{$rand}" defer></script>
+<script src=\"https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=cfycOnloadFunction{$rand}\" defer></script>
 <script>
     function cfycOnloadFunction{$rand}() {
         if (window.smartCaptcha) {
             const container = document.getElementById('{$tag->name}-{$rand}');
-             window.smartCaptcha.render(container, {
+            window.smartCaptcha.render(container, {
                 sitekey: '{$key}',
                 invisible: {$invisible},
                 test: {$test},
                 hideShield: {$hideShield},
                 shieldPosition: '{$shieldPosition}',
-                callback: (token) => container.classList.remove("wpcf7-not-valid"),
-            });
+                callback: (token) => container.classList.remove(\"wpcf7-not-valid\"),
+            })
+
             {$execute}
         }
     }
-</script>
-CONTENT;
+</script>";
 
 			return $content;
 		}
@@ -100,8 +108,8 @@ CONTENT;
 		 */
 		public function cfyc_validate_fills( $result, $tag ) {
 			$submission = WPCF7_Submission::get_instance();
-			$data = $submission->get_posted_data();
-			$token = stripslashes( sanitize_text_field( $data['smart-token'] ?? '' ) );
+			$data       = $submission->get_posted_data();
+			$token      = stripslashes( sanitize_text_field( $data['smart-token'] ?? '' ) );
 			if ( empty( $token ) ) {
 				$error = __( 'Please check captcha', 'captcha-by-yandex-for-contact-form-7' );
 				$result->invalidate( $tag, $error );
@@ -124,8 +132,8 @@ CONTENT;
 				return false;
 			}
 			$submission = WPCF7_Submission::get_instance();
-			$data = $submission->get_posted_data();
-			$token = stripslashes( sanitize_text_field( $data['smart-token'] ?? '' ) );
+			$data       = $submission->get_posted_data();
+			$token      = stripslashes( sanitize_text_field( $data['smart-token'] ?? '' ) );
 
 			if ( $service->verify( $token ) ) { // Human
 				$spam = false;
