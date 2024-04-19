@@ -5,9 +5,9 @@
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Requires Plugins: contact-form-7
- * Author:      stasionok
+ * Author:      Stanislav Kuznetsov
  * Author URI:  https://t.me/stasionok
- * Version:     1.0.2
+ * Version:     1.0.4
  * License: GPLv3
  * Text Domain: captcha-by-yandex-for-contact-form-7
  * Domain Path: /languages

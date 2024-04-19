@@ -2,10 +2,10 @@
 Contributors: stasionok
 Tags: contact form 7, yandex, captcha, яндекс капча, yandex captcha
 Tested up to: 6.4.3
-Stable tag: 1.0.2
+Stable tag: 1.0.4
 License: GPLv3
 
-Add antispam Yandex captcha for your forms with Contact Form 7
+Add antispam Yandex SmartCaptcha for your forms with Contact Form 7
 
 == Description ==
 
@@ -67,3 +67,7 @@ Allows using few forms in one page
 
 = 1.0.3 =
 * Update code due deploy review
+
+= 1.0.4 =
+* Add blueprint
+* Fix author name like my other plugins
