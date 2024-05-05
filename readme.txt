@@ -1,7 +1,7 @@
 === Captcha by Yandex for Contact Form 7 ===
 Contributors: stasionok
 Tags: contact form 7, yandex, captcha, яндекс капча, yandex captcha
-Tested up to: 6.4.3
+Tested up to: 6.5.2
 Stable tag: 1.0.4
 License: GPLv3
 

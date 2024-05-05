@@ -32,6 +32,24 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 					'singular'                => true,
 				)
 			);
+
+			wp_enqueue_script(
+				'cfyc-captcha',
+				'https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=cfycOnloadFunction',
+				array(),
+				'1.0.0',
+				array(
+					'strategy'  => 'defer',
+				)
+			);
+			wp_add_inline_script('cfyc-captcha',"
+				var cfycCaptchaReadyEvent = new CustomEvent('cfycCaptchaReadyEvent')
+				var cfycCaptchaLoaded = false 
+				function cfycOnloadFunction() {
+					cfycCaptchaLoaded = true
+					document.dispatchEvent(cfycCaptchaReadyEvent)
+				}
+            ", 'before');
 		}
 
 		/**
@@ -55,16 +73,38 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 			$service = CFYC_Service::get_instance();
 			$key     = $service->get_sitekey();
 
-			$rand    = wp_rand( 1000, 9999 );
+			$rand = wp_rand( 1000, 9999 );
 
-			$execute = $invisible === 'true' ?
-				'window.smartCaptcha.execute();' :
-				"container.closest('form').addEventListener('submit', function (event) {
+			$randName = str_replace( '-', '', $tag->name . $rand );
+
+			// for visible
+			$callback = '';
+			$style = ' style="min-height: 102px;"';
+			$execute  = "
+				form{$randName}.addEventListener('submit', function (event) {
 					const tokenField = document.querySelector('#{$tag->name}-{$rand} input[name=smart-token]');
-				    if (tokenField?.value?.length === 0) { container.classList.add(\"wpcf7-not-valid\"); }
-				})";
+					if (tokenField?.value?.length === 0) { container{$randName}.classList.add(\"wpcf7-not-valid\"); }
+				})
+			";
 
-			$style   = $invisible === 'true' ? '' : ' style="min-height: 102px;"';
+			// for invisible
+			if ($invisible === 'true') {
+				$execute = "
+					submitBtn{$randName}.type='button'
+					submitBtn{$randName}.addEventListener('click', function (event) {
+						if (!flag{$randName}) {
+		                    window.smartCaptcha.execute(widget{$randName});
+		                    return false
+		                } 
+	
+	                    wpcf7.submit(form{$randName}, submitBtn{$randName});
+					})
+				";
+
+				$callback = "wpcf7.submit(form{$randName}, submitBtn{$randName});";
+
+				$style = '';
+			}
 
 			$content = "
 <div class=\"smart-captcha\" id=\"{$tag->name}-{$rand}\"{$style}></div>
@@ -76,23 +116,37 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
     border-radius: 11px;
 }
 </style>
-<script src=\"https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=cfycOnloadFunction{$rand}\" defer></script>
 <script>
-    function cfycOnloadFunction{$rand}() {
-        if (window.smartCaptcha) {
-            const container = document.getElementById('{$tag->name}-{$rand}');
-            window.smartCaptcha.render(container, {
-                sitekey: '{$key}',
-                invisible: {$invisible},
-                test: {$test},
-                hideShield: {$hideShield},
-                shieldPosition: '{$shieldPosition}',
-                callback: (token) => container.classList.remove(\"wpcf7-not-valid\"),
-            })
-
-            {$execute}
-        }
-    }
+	document.addEventListener('DOMContentLoaded', function(e) {
+    	if (typeof cfycCaptchaLoaded !== 'undefined' && cfycCaptchaLoaded) {
+            cfycLoad{$randName}()
+    	} else {
+            document.addEventListener('cfycCaptchaReadyEvent', cfycLoad{$randName})
+    	}
+         
+        function cfycLoad{$randName}() {
+	        if (window.smartCaptcha) {
+	            const container{$randName} = document.getElementById('{$tag->name}-{$rand}');
+	            const form{$randName} = container{$randName}.closest('form')
+	            const submitBtn{$randName} = form{$randName}.querySelector('input[type=\"submit\"]')
+	            let flag{$randName} = false
+	            const widget{$randName} = window.smartCaptcha.render(container{$randName}, {
+	                sitekey: '{$key}',
+	                invisible: {$invisible},
+	                test: {$test},
+	                hideShield: {$hideShield},
+	                shieldPosition: '{$shieldPosition}',
+	                callback: (token) => {
+	    				flag{$randName} = true
+	                    container{$randName}.classList.remove(\"wpcf7-not-valid\")
+						{$callback}
+	                }
+	            })
+		
+				{$execute}
+	        }
+	    }
+	});
 </script>";
 
 			return $content;

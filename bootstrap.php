@@ -5,8 +5,9 @@
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Requires Plugins: contact-form-7
- * Author:      Stanislav Kuznetsov
- * Author URI:  https://t.me/stasionok
+ * Author URI:      https://www.linkedin.com/in/stasionok/
+ * Author Telegram: https://t.me/stasionok
+ * Author:          Stanislav Kuznetsov
  * Version:     1.0.4
  * License: GPLv3
  * Text Domain: captcha-by-yandex-for-contact-form-7
