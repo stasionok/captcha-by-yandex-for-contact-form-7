@@ -128,7 +128,10 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 	        if (window.smartCaptcha) {
 	            const container{$randName} = document.getElementById('{$tag->name}-{$rand}');
 	            const form{$randName} = container{$randName}.closest('form')
-	            const submitBtn{$randName} = form{$randName}.querySelector('input[type=\"submit\"]')
+	            let submitBtn{$randName} = form{$randName}.querySelector('input[type=\"submit\"]')
+	            if (!submitBtn{$randName}) {
+                    submitBtn{$randName} = form{$randName}.querySelector('button[type=\"submit\"]')
+	            }
 	            let flag{$randName} = false
 	            const widget{$randName} = window.smartCaptcha.render(container{$randName}, {
 	                sitekey: '{$key}',

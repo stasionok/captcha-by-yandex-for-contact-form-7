@@ -1,8 +1,8 @@
 === Captcha by Yandex for Contact Form 7 ===
 Contributors: stasionok
 Tags: contact form 7, yandex, captcha, яндекс капча, yandex captcha
-Tested up to: 6.5.2
-Stable tag: 1.0.4
+Tested up to: 6.7.1
+Stable tag: 1.1.1
 License: GPLv3
 
 Add antispam Yandex SmartCaptcha for your forms with Contact Form 7
@@ -53,21 +53,30 @@ When you add yandex captcha into your form, please check `Use invisible captcha`
 
 
 == Changelog ==
+= 1.1.1 =
+* Fix error when submit is button instead of input
+* Check WP 6.7.1 compatibility
 
-= 1.0.0 =
-* Basic functionality released.
+= 1.1.0 =
+* Refactor captcha loading
+* Fix load a few captchas on one page
+* Execute invisible captcha only on submitting (on page load was before)
 
-= 1.0.1 =
-Reduce php version to 7.4
-Fix verify captcha on some cases
+= 1.0.4 =
+* Add blueprint
+* Fix author name like my other plugins
+
+= 1.0.3 =
+* Update code due deploy review
 
 = 1.0.2 =
 Fix wp codex issue
 Allows using few forms in one page
 
-= 1.0.3 =
-* Update code due deploy review
+= 1.0.1 =
+Reduce php version to 7.4
+Fix verify captcha on some cases
 
-= 1.0.4 =
-* Add blueprint
-* Fix author name like my other plugins
+= 1.0.0 =
+* Basic functionality released.
+

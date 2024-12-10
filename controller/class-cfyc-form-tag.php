@@ -47,7 +47,8 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
 			$tag_generator->add(
 				CFYC_Common::TAG_NAME,
 				self::PANEL_BUTTON_NAME,
-				$service->is_active() ? array( $this, 'cfyc_tag_generator_configured' ) : array( $this, 'cfyc_tag_generator_misconfigured' )
+				$service->is_active() ? array( $this, 'cfyc_tag_generator_configured' ) : array( $this, 'cfyc_tag_generator_misconfigured' ),
+//                array( 'version' => '2' )
 			);
 		}
 
@@ -131,7 +132,7 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
             </div>
 
             <div class="insert-box">
-                <input type="text" name="<?php echo esc_attr(CFYC_Common::TAG_NAME) ?>" class="tag code" readonly="readonly" onfocus="this.select()"/>
+                <input type="text" name="<?php echo esc_attr(CFYC_Common::TAG_NAME) ?>" class="tag code" readonly="readonly" onfocus="this.select()" data-tag-part="tag" />
 
                 <div class="submitbox">
                     <input type="button" class="button button-primary insert-tag" value="<?php echo esc_attr( __( 'Insert Tag', 'captcha-by-yandex-for-contact-form-7' ) ); ?>"/>
