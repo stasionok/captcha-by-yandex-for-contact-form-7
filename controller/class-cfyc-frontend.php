@@ -106,8 +106,13 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 				$style = '';
 			}
 
+			$class = 'smart-captcha';
+			if (!empty($tag->get_class_option())) {
+				$class .= ' ' . esc_attr($tag->get_class_option());
+			}
+
 			$content = "
-<div class=\"smart-captcha\" id=\"{$tag->name}-{$rand}\"{$style}></div>
+<div class=\"{$class}\" id=\"{$tag->name}-{$rand}\"{$style}></div>
 <style>
 .smart-captcha.wpcf7-not-valid {
     height: 102px;
