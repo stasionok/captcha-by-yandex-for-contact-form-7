@@ -1,8 +1,8 @@
 === Captcha by Yandex for Contact Form 7 ===
 Contributors: stasionok
 Tags: contact form 7, yandex, captcha, яндекс капча, yandex captcha
-Tested up to: 6.7.1
-Stable tag: 1.1.1
+Tested up to: 6.8.1
+Stable tag: 1.2.0
 License: GPLv3
 
 Add antispam Yandex SmartCaptcha for your forms with Contact Form 7
@@ -40,6 +40,15 @@ Open [console.cloud.yandex.ru](https://console.cloud.yandex.ru/) login, add Yand
 
 When you add yandex captcha into your form, please check `Use invisible captcha`
 
+= How to init captcha with delay =
+
+Trigger custom event to init captcha. See this example
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+    document.dispatchEvent(new CustomEvent('cfycInitEvent'));
+});
+</script>
+
 == Screenshots ==
 
 1. There is a configuration page placed
@@ -53,6 +62,11 @@ When you add yandex captcha into your form, please check `Use invisible captcha`
 
 
 == Changelog ==
+= 1.2.0 =
+* Update for CF7 new tag generator version 2
+* Add custom event for custom init
+* Check WP 6.8.1 compatibility
+
 = 1.1.1 =
 * Fix error when submit is button instead of input
 * Check WP 6.7.1 compatibility
