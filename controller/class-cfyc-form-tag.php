@@ -138,8 +138,6 @@ if ( ! class_exists( 'CFYC_Form_Tag' ) ) {
                         </tr>
                     </tbody>
                 </table>
-
-				<?php $tgg->print( 'class_attr' ); ?>
             </div>
 
             <footer class="insert-box">

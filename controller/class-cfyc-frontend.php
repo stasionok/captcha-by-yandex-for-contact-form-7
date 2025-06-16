@@ -49,6 +49,18 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 					cfycCaptchaLoaded = true
 					document.dispatchEvent(cfycCaptchaReadyEvent)
 				}
+
+				document.addEventListener('DOMContentLoaded', function(e) {
+					document.addEventListener('cfycInitEvent', function(e) {
+						const containers = document.querySelectorAll('.cfyc-captcha-container');
+						containers.forEach(container => {
+							const randName = container.id.replace(/-/g, '');
+							if (typeof window['cfycLoad' + randName] === 'function') {
+								window['cfycLoad' + randName]();
+							}
+						});
+					});
+				});
             ", 'before' );
 		}
 
@@ -112,7 +124,7 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 			}
 
 			$content = "
-<div class=\"{$class}\" id=\"{$tag->name}-{$rand}\"{$style}></div>
+<div class=\"{$class} cfyc-captcha-container\" id=\"{$tag->name}-{$rand}\"{$style}></div>
 <style>
 .smart-captcha.wpcf7-not-valid {
     height: 102px;
@@ -122,29 +134,29 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 }
 </style>";
 
-			$script = "
-(function() {
-	function cfycLoad{$randName}() {
+			$script = "	
+	document.addEventListener('DOMContentLoaded', function(e) {
+		if (typeof cfycCaptchaLoaded !== 'undefined' && cfycCaptchaLoaded) {
+			cfycLoad{$randName}()
+		} else {
+			document.addEventListener('cfycCaptchaReadyEvent', cfycLoad{$randName})
+		}
+	});
+
+	window.cfycLoad{$randName} = function() {
 		if (window.smartCaptcha) {
 			const container{$randName} = document.getElementById('{$tag->name}-{$rand}');
-			if (!container{$randName}) {
+			if (window['cfycInitialized' + {$rand}]) {
 				return;
 			}
+			window['cfycInitialized' + {$rand}] = true;
 			
-			const form{$randName} = container{$randName}.closest('form');
-			if (!form{$randName}) {
-				return;
-			}
-			
-			let submitBtn{$randName} = form{$randName}.querySelector('input[type=\"submit\"]');
+			const form{$randName} = container{$randName}.closest('form')
+			let submitBtn{$randName} = form{$randName}.querySelector('input[type=\"submit\"]')
 			if (!submitBtn{$randName}) {
-				submitBtn{$randName} = form{$randName}.querySelector('button[type=\"submit\"]');
+				submitBtn{$randName} = form{$randName}.querySelector('button[type=\"submit\"]')
 			}
-			if (!submitBtn{$randName}) {
-				return;
-			}
-			
-			let flag{$randName} = false;
+			let flag{$randName} = false
 			const widget{$randName} = window.smartCaptcha.render(container{$randName}, {
 				sitekey: '{$key}',
 				invisible: {$invisible},
@@ -152,39 +164,15 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 				hideShield: {$hideShield},
 				shieldPosition: '{$shieldPosition}',
 				callback: (token) => {
-					flag{$randName} = true;
-					container{$randName}.classList.remove(\"wpcf7-not-valid\");
+					flag{$randName} = true
+					container{$randName}.classList.remove(\"wpcf7-not-valid\")
 					{$callback}
 				}
-			});
+			})
 
 			{$execute}
 		}
-	}
-
-	document.addEventListener('cfycInitEvent', function(e) {
-		if (typeof cfycLoad{$randName} === 'function') {
-			cfycLoad{$randName}();
-		}
-	});
-
-	// Инициализация при загрузке страницы
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', function(e) {
-			if (typeof cfycCaptchaLoaded !== 'undefined' && cfycCaptchaLoaded) {
-				cfycLoad{$randName}();
-			} else {
-				document.addEventListener('cfycCaptchaReadyEvent', cfycLoad{$randName});
-			}
-		});
-	} else {
-		if (typeof cfycCaptchaLoaded !== 'undefined' && cfycCaptchaLoaded) {
-			cfycLoad{$randName}();
-		} else {
-			document.addEventListener('cfycCaptchaReadyEvent', cfycLoad{$randName});
-		}
-	}
-})();";
+	}";
 
 			wp_add_inline_script( 'cfyc-captcha', $script );
 
