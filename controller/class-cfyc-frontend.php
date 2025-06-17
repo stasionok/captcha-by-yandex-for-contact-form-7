@@ -119,8 +119,8 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 			}
 
 			$class = 'smart-captcha';
-			if (!empty($tag->get_class_option())) {
-				$class .= ' ' . esc_attr($tag->get_class_option());
+			if ( ! empty( $tag->get_class_option() ) ) {
+				$class .= ' ' . esc_attr( $tag->get_class_option() );
 			}
 
 			$content = "
@@ -132,24 +132,23 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
     padding-right: 2px;
     border-radius: 11px;
 }
-</style>";
-
-			$script = "	
+</style>
+<script>
 	document.addEventListener('DOMContentLoaded', function(e) {
 		if (typeof cfycCaptchaLoaded !== 'undefined' && cfycCaptchaLoaded) {
 			cfycLoad{$randName}()
 		} else {
 			document.addEventListener('cfycCaptchaReadyEvent', cfycLoad{$randName})
 		}
-	});
+	})
 
 	window.cfycLoad{$randName} = function() {
 		if (window.smartCaptcha) {
-			const container{$randName} = document.getElementById('{$tag->name}-{$rand}');
+			const container{$randName} = document.getElementById('{$tag->name}-{$rand}')
 			if (window['cfycInitialized' + {$rand}]) {
-				return;
+				return
 			}
-			window['cfycInitialized' + {$rand}] = true;
+			window['cfycInitialized' + {$rand}] = true
 			
 			const form{$randName} = container{$randName}.closest('form')
 			let submitBtn{$randName} = form{$randName}.querySelector('input[type=\"submit\"]')
@@ -172,9 +171,8 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 
 			{$execute}
 		}
-	}";
-
-			wp_add_inline_script( 'cfyc-captcha', $script );
+	}
+</script>";
 
 			return $content;
 		}

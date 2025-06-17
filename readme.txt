@@ -2,7 +2,7 @@
 Contributors: stasionok
 Tags: contact form 7, yandex, captcha, яндекс капча, yandex captcha
 Tested up to: 6.8.1
-Stable tag: 1.2.1
+Stable tag: 1.2.3
 License: GPLv3
 
 Add antispam Yandex SmartCaptcha for your forms with Contact Form 7
@@ -62,6 +62,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 == Changelog ==
+= 1.2.3 =
+* Fix other init captcha error
+
 = 1.2.1 =
 * Fix error init captcha
 * Fix duplicate class attribute
