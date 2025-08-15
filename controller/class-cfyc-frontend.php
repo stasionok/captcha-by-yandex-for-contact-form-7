@@ -62,6 +62,11 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 					});
 				});
             ", 'before' );
+
+			// Enqueue styles in header instead of inline <style> inside form markup
+			wp_register_style( 'cfyc-captcha-style', false, array(), '1.0.0' );
+			wp_add_inline_style( 'cfyc-captcha-style', '.smart-captcha.wpcf7-not-valid{height:102px;border:1px solid;padding-right:2px;border-radius:11px;}' );
+			wp_enqueue_style( 'cfyc-captcha-style' );
 		}
 
 		/**
@@ -125,14 +130,6 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 
 			$content = "
 <div class=\"{$class} cfyc-captcha-container\" id=\"{$tag->name}-{$rand}\"{$style}></div>
-<style>
-.smart-captcha.wpcf7-not-valid {
-    height: 102px;
-    border: 1px solid;
-    padding-right: 2px;
-    border-radius: 11px;
-}
-</style>
 <script>
 	document.addEventListener('DOMContentLoaded', function(e) {
 		if (typeof cfycCaptchaLoaded !== 'undefined' && cfycCaptchaLoaded) {
