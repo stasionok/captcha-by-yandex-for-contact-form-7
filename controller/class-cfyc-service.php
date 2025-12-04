@@ -1,7 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-require_once ABSPATH . 'wp-content/plugins/contact-form-7/includes/integration.php';
+    require_once ABSPATH . 'wp-content/plugins/contact-form-7/includes/integration.php';
 
 if ( ! class_exists( 'WPCF7_Service' ) ) {
 	return;

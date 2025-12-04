@@ -8,7 +8,7 @@
  * Author URI:      https://www.linkedin.com/in/stasionok/
  * Author Telegram: https://t.me/stasionok
  * Author:          Stanislav Kuznetsov
- * Version:     1.2.4
+ * Version:     1.2.5
  * License: GPLv3
  * Text Domain: captcha-by-yandex-for-contact-form-7
  * Domain Path: /languages
@@ -51,8 +51,31 @@ function cfyc_requirements_met(): array {
 		);
 	}
 
-	if (version_compare( $wp_version, '6.5', '<' ) &&  ! is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
-		$errors[] = esc_html__( 'Please install and activate Contact Form 7 plugin first', 'captcha-by-yandex-for-contact-form-7' );
+	// Проверка активности Contact Form 7 для Bedrock и стандартного WordPress
+	$cf7_active = false;
+	if (version_compare( $wp_version, '6.5', '<' )) {
+		if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+			$cf7_active = true;
+		}
+		
+		// Дополнительная проверка через существование класса WPCF7
+		if (!$cf7_active && class_exists('WPCF7')) {
+			$cf7_active = true;
+		}
+		
+		// Проверка существования файла плагина
+		if (!$cf7_active) {
+			$cf7_file_exists = false;
+			if (file_exists(WP_PLUGIN_DIR . '/contact-form-7/wp-contact-form-7.php')) {
+				$cf7_file_exists = true;
+			} elseif (file_exists(ABSPATH . 'wp-content/plugins/contact-form-7/wp-contact-form-7.php')) {
+				$cf7_file_exists = true;
+			}
+			
+			if (!$cf7_file_exists) {
+				$errors[] = esc_html__( 'Please install and activate Contact Form 7 plugin first', 'captcha-by-yandex-for-contact-form-7' );
+			}
+		}
 	}
 
 	return $errors;
