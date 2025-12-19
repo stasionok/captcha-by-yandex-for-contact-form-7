@@ -35,7 +35,7 @@ if ( ! class_exists( 'CFYC_Frontend' ) ) {
 
 			wp_enqueue_script(
 				'cfyc-captcha',
-				'https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=cfycOnloadFunction',
+				'https://smartcaptcha.cloud.yandex.ru/captcha.js?render=onload&onload=cfycOnloadFunction',
 				array(),
 				'1.0.0',
 				array(

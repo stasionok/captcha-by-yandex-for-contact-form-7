@@ -291,7 +291,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 			$service   = CFYC_Service::get_instance();
 			$siteKey   = $service->get_sitekey();
 			$serverKey = $service->get_secret( $siteKey );
-			$response  = wp_remote_get( 'https://smartcaptcha.yandexcloud.net/validate?secret=' . $serverKey . '&ip=' . $ip . '&token=' . $token );
+			$response  = wp_remote_get( 'https://smartcaptcha.cloud.yandex.ru/validate?secret=' . $serverKey . '&ip=' . $ip . '&token=' . $token );
 
 			// проверка ошибки
 			if ( is_wp_error( $response ) ) {
@@ -313,7 +313,7 @@ if ( ! class_exists( 'CFYC_Service' ) ) {
 		private function verifySiteKey( string $sitekey ): bool {
 			$urlparts = wp_parse_url( site_url() );
 			$domain   = $urlparts['host'];
-			$response = wp_remote_post( 'https://smartcaptcha.yandexcloud.net/check?host=' . $domain . '&sitekey=' . $sitekey );
+			$response = wp_remote_post( 'https://smartcaptcha.cloud.yandex.ru/check?host=' . $domain . '&sitekey=' . $sitekey );
 
 			// проверка ошибки
 			if ( is_wp_error( $response ) ) {
