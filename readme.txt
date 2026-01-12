@@ -2,7 +2,7 @@
 Contributors: stasionok
 Tags: contact form 7, yandex, captcha, яндекс капча, yandex captcha
 Tested up to: 6.8.2
-Stable tag: 1.2.5
+Stable tag: 1.2.7
 License: GPLv3
 
 Add antispam Yandex SmartCaptcha for your forms with Contact Form 7
@@ -62,6 +62,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 == Changelog ==
+
+= 1.2.7 =
+* Fix bedrock compatibility
 
 = 1.2.6 =
 * Update smartcaptcha domain to new smartcaptcha.cloud.yandex.ru

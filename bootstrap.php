@@ -8,7 +8,7 @@
  * Author URI:      https://www.linkedin.com/in/stasionok/
  * Author Telegram: https://t.me/stasionok
  * Author:          Stanislav Kuznetsov
- * Version:     1.2.5
+ * Version:     1.2.7
  * License: GPLv3
  * Text Domain: captcha-by-yandex-for-contact-form-7
  * Domain Path: /languages

@@ -1,7 +1,26 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-    require_once ABSPATH . 'wp-content/plugins/contact-form-7/includes/integration.php';
+if ( ! class_exists( 'WPCF7_Integration' ) ) {
+	$integration_file = '';
+	
+	// Try WP_PLUGIN_DIR first (standard WordPress and Bedrock)
+	if ( defined( 'WP_PLUGIN_DIR' ) && file_exists( WP_PLUGIN_DIR . '/contact-form-7/includes/integration.php' ) ) {
+		$integration_file = WP_PLUGIN_DIR . '/contact-form-7/includes/integration.php';
+	}
+	// Fallback to WP_CONTENT_DIR/plugins (for compatibility)
+	elseif ( defined( 'WP_CONTENT_DIR' ) && file_exists( WP_CONTENT_DIR . '/plugins/contact-form-7/includes/integration.php' ) ) {
+		$integration_file = WP_CONTENT_DIR . '/plugins/contact-form-7/includes/integration.php';
+	}
+	// Last resort: try ABSPATH wp-content/plugins
+	elseif ( file_exists( ABSPATH . 'wp-content/plugins/contact-form-7/includes/integration.php' ) ) {
+		$integration_file = ABSPATH . 'wp-content/plugins/contact-form-7/includes/integration.php';
+	}
+	
+	if ( $integration_file ) {
+		require_once $integration_file;
+	}
+}
 
 if ( ! class_exists( 'WPCF7_Service' ) ) {
 	return;
